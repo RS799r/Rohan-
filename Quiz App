@@ -1,1 +1,66 @@
-
+Simple Quiz App - HTML
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Simple Quiz App</title>
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <div class="quiz-container">
+ <h2>Simple Quiz App</h2>
+ <div id="question"></div>
+ <div id="options"></div>
+ <button id="nextBtn">Next</button>
+ <div id="result"></div>
+ <script src="script.js"></script>
+ </div>
+</body>
+</html>
+CSS
+.quiz-container {
+ width: 300px;
+ margin: auto;
+ padding: 20px;
+ border: 1px solid #000;
+ border-radius: 10px;
+ text-align: center;
+}
+button {
+ margin-top: 15px;
+ padding: 10px;
+}
+JavaScript
+const questions = [
+ {
+ question: "What is 2 + 2?",
+ options: ["3", "4", "5"],
+ answer: "4"
+ },
+ {
+ question: "Capital of India?",
+ options: ["Mumbai", "Delhi", "Kolkata"],
+ answer: "Delhi"
+ }
+];
+let index = 0;
+let score = 0;
+function loadQuestion() {
+ document.getElementById("question").innerText = questions[index].question;
+ const optionsDiv = document.getElementById("options");
+ optionsDiv.innerHTML = "";
+ questions[index].options.forEach(opt => {
+ const btn = document.createElement("button");
+ btn.innerText = opt;
+ btn.onclick = () => checkAnswer(opt);
+ optionsDiv.appendChild(btn);
+ });
+}
+function checkAnswer(opt) {
+ if (opt === questions[index].answer) score++;
+}
+document.getElementById("nextBtn").onclick = () => {
+index++;
+ if (index < questions.length) loadQuestion();
+ else document.getElementById("result").innerText = "Score: " + score;
+};
+loadQuestion();
